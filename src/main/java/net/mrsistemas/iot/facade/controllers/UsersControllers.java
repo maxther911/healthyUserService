@@ -6,6 +6,8 @@ import net.mrsistemas.iot.facade.dto.Greeting;
 import net.mrsistemas.iot.facade.dto.User;
 import net.mrsistemas.iot.facade.transform.FacadeToBussiness;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationDetails;
@@ -35,7 +37,7 @@ public class UsersControllers {
     }
 
     @PreAuthorize("#oauth2.hasScope('foo') and #oauth2.hasScope('read')")
-    @RequestMapping(value = "/getUsers", method = RequestMethod.GET)
+    @GetMapping(value = "/getUsers")
     public List<User> getUsers() {
         List<User> lista = new ArrayList<>();
         for (Users users : uService.findAllUsers()) {
@@ -51,7 +53,7 @@ public class UsersControllers {
      }
  */
     @PreAuthorize("#oauth2.hasScope('read')")
-    @RequestMapping(method = RequestMethod.GET, value = "/extra")
+    @GetMapping(value = "/extra")
     @ResponseBody
     public Map<String, Object> getExtraInfo(Authentication auth) {
         OAuth2AuthenticationDetails oauthDetails = (OAuth2AuthenticationDetails) auth.getDetails();
@@ -60,11 +62,11 @@ public class UsersControllers {
     }
 
     @PreAuthorize("#oauth2.hasScope('read')")
-    @RequestMapping(method = RequestMethod.GET, value = "/id/{id}")
+    @GetMapping(value = "/id/{id}")
     @ResponseBody
-    public User getInfoUser(@PathVariable(value = "id") long id) {
+    public ResponseEntity<User> getInfoUser(@PathVariable(value = "id") long id) {
         System.out.println("Entrada: " + id);
-        return new FacadeToBussiness().getUsers(uService.findOne(id).get());
+        return new ResponseEntity<User>(new FacadeToBussiness().getUsers(uService.findOne(id).get()), HttpStatus.OK);
     }
 
 }

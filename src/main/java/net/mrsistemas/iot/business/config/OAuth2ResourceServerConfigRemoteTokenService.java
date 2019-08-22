@@ -31,7 +31,7 @@ public class OAuth2ResourceServerConfigRemoteTokenService extends ResourceServer
     @Bean
     public RemoteTokenServices tokenServices() {
         final RemoteTokenServices tokenService = new RemoteTokenServices();
-        tokenService.setCheckTokenEndpointUrl("http://localhost:8081/healthyOauthServer/oauth/check_token");
+        tokenService.setCheckTokenEndpointUrl("http://localhost:8080/healthyOauthServer/oauth/check_token");
         tokenService.setClientId("USER_CLIENT_APP");
         tokenService.setClientSecret("password");
         tokenService.setAccessTokenConverter(accessTokenConverter());
