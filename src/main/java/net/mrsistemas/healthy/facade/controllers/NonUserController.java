@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 @RequestMapping("/NonUser")
 public class NonUserController {
 
+    @Autowired
     DataUsersService userOperations;
 
     @Autowired

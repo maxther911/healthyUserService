@@ -1,32 +1,74 @@
 package net.mrsistemas.healthy.business.persistence.entities;
 
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import java.io.Serializable;
+import javax.persistence.*;
+import java.util.List;
 
-@Entity(name = "city")
-@AllArgsConstructor
+
+/**
+ * The persistent class for the city database table.
+ * 
+ */
+@Entity
 @NoArgsConstructor
-@Builder
-public class City extends BaseIdEntity{
+public class City implements Serializable {
+	private static final long serialVersionUID = 1L;
 
-    @Id
-    @Getter
-    @Setter
-    @Column(insertable=false, updatable=false)
-    private Long id;
+	@Id
+	@Getter
+	@Setter
+	@Column(insertable = false, updatable = false)
+	private Long id;
+	
+	private String code;
 
-    @Getter
-    @Setter
-    private String code;
+	private String name;
 
-    @Getter
-    @Setter
-    private String name;
+	//bi-directional many-to-one association to Country
+	@ManyToOne
+	@JoinColumn(name="id_country")
+	private Country country;
 
-    @Getter
-    @Setter
-    private Location location;
+	//bi-directional many-to-one association to Location
+	@ManyToOne
+	private Location location;
+
+	public String getCode() {
+		return this.code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
+
+	public String getName() {
+		return this.name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public Country getCountry() {
+		return this.country;
+	}
+
+	public void setCountry(Country country) {
+		this.country = country;
+	}
+
+
+	public Location getLocation() {
+		return this.location;
+	}
+
+	public void setLocation(Location location) {
+		this.location = location;
+	}
+
+
 }

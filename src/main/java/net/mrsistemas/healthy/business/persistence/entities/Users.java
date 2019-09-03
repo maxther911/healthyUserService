@@ -1,6 +1,5 @@
 package net.mrsistemas.healthy.business.persistence.entities;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.Fetch;
@@ -17,44 +16,98 @@ import java.util.Set;
 @Entity
 public class Users extends BaseIdEntity {
 
-    @Getter
-    @Setter
-    @Column(insertable=false, updatable=false)
-    private long id;
+    @Id
+    private Long id;
 
-    @Getter
-    @Setter
+    @Column(name="account_expired")
+    private Boolean accountExpired;
+
+    @Column(name="account_locked")
+    private Boolean accountLocked;
+
+    @Column(name="credentials_expired")
+    private Boolean credentialsExpired;
+
     private String email;
 
-    @Getter
-    @Setter
-    private String username;
+    private Boolean enabled;
 
-    @Getter
-    @Setter
     private String password;
 
-    @Getter
-    @Setter
-    private boolean enabled;
-    @Column(insertable=false, updatable=false)
-    @OneToMany(mappedBy="id")
-    private Set<DataUser> data;
+    private String username;
 
-    @Getter
-    @Setter
-    @Column(name = "account_locked")
-    private boolean accountNonLocked;
+    //bi-directional one-to-one association to DataUser
+    @OneToOne(mappedBy="user1")
+    private DataUser dataUser1;
 
-    @Getter
-    @Setter
-    @Column(name = "account_expired")
-    private boolean accountNonExpired;
+    //bi-directional one-to-one association to DataUser
+    @OneToOne
+    @JoinColumn(name="id")
+    private DataUser dataUser2;
 
-    @Getter
-    @Setter
-    @Column(name = "credentials_expired")
-    private boolean credentialsNonExpired;
+    public Long getId() {
+        return this.id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Boolean getAccountExpired() {
+        return this.accountExpired;
+    }
+
+    public void setAccountExpired(Boolean accountExpired) {
+        this.accountExpired = accountExpired;
+    }
+
+    public Boolean getAccountLocked() {
+        return this.accountLocked;
+    }
+
+    public void setAccountLocked(Boolean accountLocked) {
+        this.accountLocked = accountLocked;
+    }
+
+    public Boolean getCredentialsExpired() {
+        return this.credentialsExpired;
+    }
+
+    public void setCredentialsExpired(Boolean credentialsExpired) {
+        this.credentialsExpired = credentialsExpired;
+    }
+
+    public String getEmail() {
+        return this.email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public Boolean getEnabled() {
+        return this.enabled;
+    }
+
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    public String getPassword() {
+        return this.password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getUsername() {
+        return this.username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
     @Getter
     @Setter
