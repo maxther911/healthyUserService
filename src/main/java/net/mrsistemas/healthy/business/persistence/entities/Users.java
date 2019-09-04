@@ -1,7 +1,5 @@
 package net.mrsistemas.healthy.business.persistence.entities;
 
-import lombok.Getter;
-import lombok.Setter;
 import org.codehaus.jackson.annotate.JsonProperty;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
@@ -19,27 +17,20 @@ public class Users extends BaseIdEntity {
 
     @Id
     private Long id;
-
     @Column(name="account_expired")
     private Boolean accountExpired;
-
     @Column(name="account_locked")
     private Boolean accountLocked;
-
     @Column(name="credentials_expired")
     private Boolean credentialsExpired;
-
     private String email;
-
     private Boolean enabled;
-
     private String password;
-
     private String username;
 
     //bi-directional one-to-one association to DataUser
-    @OneToOne
-    @JoinColumn(name="id")
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name="id", updatable = false, insertable = false)
     private DataUser dataUser;
 
     public Long getId() {
@@ -105,6 +96,10 @@ public class Users extends BaseIdEntity {
     public void setUsername(String username) {
         this.username = username;
     }
+
+    public DataUser getDataUser() { return dataUser; }
+
+    public void setDataUser(DataUser dataUser) { this.dataUser = dataUser; }
 
     @ManyToMany
     @JoinTable(name = "role_user", joinColumns = {
