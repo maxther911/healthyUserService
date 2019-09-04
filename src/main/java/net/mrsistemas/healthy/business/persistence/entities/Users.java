@@ -2,6 +2,7 @@ package net.mrsistemas.healthy.business.persistence.entities;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.codehaus.jackson.annotate.JsonProperty;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.springframework.security.core.GrantedAuthority;
@@ -37,13 +38,9 @@ public class Users extends BaseIdEntity {
     private String username;
 
     //bi-directional one-to-one association to DataUser
-    @OneToOne(mappedBy="user1")
-    private DataUser dataUser1;
-
-    //bi-directional one-to-one association to DataUser
     @OneToOne
     @JoinColumn(name="id")
-    private DataUser dataUser2;
+    private DataUser dataUser;
 
     public Long getId() {
         return this.id;
@@ -109,14 +106,13 @@ public class Users extends BaseIdEntity {
         this.username = username;
     }
 
-    @Getter
-    @Setter
     @ManyToMany
     @JoinTable(name = "role_user", joinColumns = {
                 @JoinColumn(name = "user_id", referencedColumnName = "id")},
             inverseJoinColumns = {
                 @JoinColumn(name = "role_id", referencedColumnName = "id")})
     @Fetch(value = FetchMode.SUBSELECT)
+    @JsonProperty(value = "rol")
     private List<Role> roles;
 
     public Collection<? extends GrantedAuthority> getAuthorities() {

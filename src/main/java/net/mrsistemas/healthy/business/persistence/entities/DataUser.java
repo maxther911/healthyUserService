@@ -1,8 +1,13 @@
 package net.mrsistemas.healthy.business.persistence.entities;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.io.Serializable;
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -14,16 +19,17 @@ import java.util.List;
 @Entity
 @Table(name="data_users")
 public class DataUser implements Serializable {
-	private static final long serialVersionUID = 1L;
 
 	@Id
 	private Long id;
 
 	private String address;
 
-	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
+	@JsonFormat(pattern = "YYYY-MM-dd")
+	@JsonProperty(value = "FechaDeNacimiento")
 	@Column(name="birth_date")
-	private Date birthDate;
+	private LocalDate birthDate;
 
 	private String cellphone;
 
@@ -44,27 +50,13 @@ public class DataUser implements Serializable {
 	private BigDecimal state;
 
 	//bi-directional many-to-one association to City
-	@OneToMany(mappedBy="dataUser", fetch=FetchType.EAGER)
-	private List<City> cities;
-
-	//bi-directional many-to-one association to City
-	@ManyToOne
-	@JoinColumn(name="id_city")
-	private City city1;
+	@OneToMany(fetch=FetchType.EAGER)
+	private List<City> places_visited;
 
 	//bi-directional many-to-one association to City
 	@ManyToOne
 	@JoinColumn(name="id_city_birth")
-	private City city2;
-
-	//bi-directional one-to-one association to Users
-	@OneToOne
-	@JoinColumn(name="id")
-	private Users user1;
-
-	//bi-directional one-to-one association to Users
-	@OneToOne(mappedBy="dataUser2")
-	private Users user2;
+	private City birth_city;;
 
 	public DataUser() {
 	}
@@ -85,11 +77,11 @@ public class DataUser implements Serializable {
 		this.address = address;
 	}
 
-	public Date getBirthDate() {
+	public LocalDate getBirthDate() {
 		return this.birthDate;
 	}
 
-	public void setBirthDate(Date birthDate) {
+	public void setBirthDate(LocalDate birthDate) {
 		this.birthDate = birthDate;
 	}
 
@@ -157,54 +149,30 @@ public class DataUser implements Serializable {
 		this.state = state;
 	}
 
-	public List<City> getCities() {
-		return this.cities;
+	public List<City> getPlaces_visited() {
+		return this.places_visited;
 	}
 
-	public void setCities(List<City> cities) {
-		this.cities = cities;
+	public void setPlaces_visited(List<City> places_visited) {
+		this.places_visited = places_visited;
 	}
 
 	public City addCity(City city) {
-		getCities().add(city);
+		getPlaces_visited().add(city);
 		return city;
 	}
 
 	public City removeCity(City city) {
-		getCities().remove(city);
+		getPlaces_visited().remove(city);
 		return city;
 	}
 
-	public City getCity1() {
-		return this.city1;
+	public City getBirth_city() {
+		return this.birth_city;
 	}
 
-	public void setCity1(City city1) {
-		this.city1 = city1;
-	}
-
-	public City getCity2() {
-		return this.city2;
-	}
-
-	public void setCity2(City city2) {
-		this.city2 = city2;
-	}
-
-	public Users getUser1() {
-		return this.user1;
-	}
-
-	public void setUser1(Users user1) {
-		this.user1 = user1;
-	}
-
-	public Users getUser2() {
-		return this.user2;
-	}
-
-	public void setUser2(Users user2) {
-		this.user2 = user2;
+	public void setBirth_city(City birth_city) {
+		this.birth_city = birth_city;
 	}
 
 }
