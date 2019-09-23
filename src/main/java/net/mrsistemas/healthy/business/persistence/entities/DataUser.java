@@ -1,10 +1,10 @@
 package net.mrsistemas.healthy.business.persistence.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import java.io.Serializable;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -15,21 +15,20 @@ import java.time.LocalDate;
  */
 @Entity
 @Table(name="data_users")
-public class DataUser implements Serializable {
+public class DataUser {
 
 	@Id
 	private Long id;
 	private String address;
 	@DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
-	@JsonFormat(pattern = "YYYY-MM-dd")
-	@JsonProperty(value = "FechaDeNacimiento")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	@Column(name="birth_date")
 	private LocalDate birthDate;
 	private String cellphone;
 	private String dni;
 	private String email;
 	@Column(name="id_contact")
-	private BigDecimal idContact;
+	private Long idContact;
 	@Column(name="last_name")
 	private String lastName;
 	private String name;
@@ -92,11 +91,11 @@ public class DataUser implements Serializable {
 		this.email = email;
 	}
 
-	public BigDecimal getIdContact() {
+	public Long getIdContact() {
 		return this.idContact;
 	}
 
-	public void setIdContact(BigDecimal idContact) {
+	public void setIdContact(Long idContact) {
 		this.idContact = idContact;
 	}
 

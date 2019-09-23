@@ -47,3 +47,4 @@ public class Country implements Serializable {
 		this.name = name;
 	}
 }
+

@@ -28,6 +28,11 @@ public class City implements Serializable {
 
 	private String name;
 
+	@Getter
+	@Setter
+	@Column(updatable = false, insertable = false)
+	private Long id_location;
+
 	//bi-directional many-to-one association to Country
 	@ManyToOne
 	@JoinColumn(name="id_country")

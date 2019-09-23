@@ -16,11 +16,8 @@ public class Location implements Serializable {
 	@Id
 	@Column(insertable = false, updatable = false)
 	private Long id;
-
 	private Long altitude;
-
 	private Long latitude;
-
 	private Long longitude;
 
 	public Location() {
