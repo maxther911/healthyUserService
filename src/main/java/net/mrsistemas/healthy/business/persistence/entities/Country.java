@@ -20,10 +20,6 @@ public class Country implements Serializable {
 
 	private String name;
 
-	//bi-directional many-to-one association to City
-	@OneToMany(mappedBy="country", fetch=FetchType.EAGER)
-	private List<City> cities;
-
 	public Country() {
 	}
 
@@ -50,27 +46,4 @@ public class Country implements Serializable {
 	public void setName(String name) {
 		this.name = name;
 	}
-
-	public List<City> getCities() {
-		return this.cities;
-	}
-
-	public void setCities(List<City> cities) {
-		this.cities = cities;
-	}
-
-	public City addCity(City city) {
-		getCities().add(city);
-		city.setCountry(this);
-
-		return city;
-	}
-
-	public City removeCity(City city) {
-		getCities().remove(city);
-		city.setCountry(null);
-
-		return city;
-	}
-
 }

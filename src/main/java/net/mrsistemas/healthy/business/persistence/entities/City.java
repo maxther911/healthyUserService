@@ -35,6 +35,7 @@ public class City implements Serializable {
 
 	//bi-directional many-to-one association to Location
 	@ManyToOne
+	@JoinColumn(name = "id_location")
 	private Location location;
 
 	public String getCode() {

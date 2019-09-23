@@ -33,7 +33,7 @@ public class Users extends BaseIdEntity {
 
     private Boolean enabled;
 
-    private String password;
+    private transient String password;
 
     private String username;
 
@@ -124,5 +124,13 @@ public class Users extends BaseIdEntity {
             });
         });
         return authorities;
+    }
+
+    public DataUser getDataUser() {
+        return dataUser;
+    }
+
+    public void setDataUser(DataUser dataUser) {
+        this.dataUser = dataUser;
     }
 }
