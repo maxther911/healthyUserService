@@ -38,7 +38,7 @@ public class Users extends BaseIdEntity {
     //bi-directional one-to-one association to DataUser
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="id", updatable = false, insertable = false)
-    private DataUser dataUser;
+    private DataUser data;
 
     public Long getId() {
         return this.id;
@@ -125,11 +125,11 @@ public class Users extends BaseIdEntity {
         return authorities;
     }
 
-    public DataUser getDataUser() {
-        return dataUser;
+    public DataUser getData() {
+        return data;
     }
 
-    public void setDataUser(DataUser dataUser) {
-        this.dataUser = dataUser;
+    public void setData(DataUser data) {
+        this.data = data;
     }
 }

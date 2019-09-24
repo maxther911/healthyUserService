@@ -1,7 +1,11 @@
 package net.mrsistemas.healthy.business.persistence.entities;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.io.Serializable;
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.List;
 
 
@@ -15,43 +19,16 @@ public class Location implements Serializable {
 
 	@Id
 	@Column(insertable = false, updatable = false)
+	@Getter @Setter
 	private Long id;
-	private Long altitude;
-	private Long latitude;
-	private Long longitude;
+	@Getter @Setter
+	private BigDecimal altitude;
+	@Getter @Setter
+	private BigDecimal latitude;
+	@Getter @Setter
+	private BigDecimal longitude;
 
 	public Location() {
 	}
 
-	public Long getId() {
-		return this.id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public Long getAltitude() {
-		return this.altitude;
-	}
-
-	public void setAltitude(Long altitude) {
-		this.altitude = altitude;
-	}
-
-	public Long getLatitude() {
-		return this.latitude;
-	}
-
-	public void setLatitude(Long latitude) {
-		this.latitude = latitude;
-	}
-
-	public Long getLongitude() {
-		return this.longitude;
-	}
-
-	public void setLongitude(Long longitude) {
-		this.longitude = longitude;
-	}
 }

@@ -2,6 +2,7 @@ package net.mrsistemas.healthy.business.persistence.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -19,6 +20,7 @@ import java.time.LocalDate;
 public class DataUser {
 
 	@Id
+	@JsonIgnore
 	private Long id;
 	private String address;
 	@DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
@@ -41,13 +43,12 @@ public class DataUser {
 	@Getter
 	@Setter
 	@OneToOne
-	@JsonIgnore
+	@JsonProperty("contact")
 	@JoinColumn(name = "id_contact", insertable = false, updatable = false)
 	private DataUser contact;
 
 	@ManyToOne
 	@JoinColumn(name="id_city_birth")
-	@JsonIgnore
 	private City birth_city;;
 
 	public DataUser() {
