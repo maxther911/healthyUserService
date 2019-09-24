@@ -4,6 +4,7 @@ import net.mrsistemas.healthy.business.persistence.entities.DataUser;
 import net.mrsistemas.healthy.business.persistence.entities.Users;
 import net.mrsistemas.healthy.business.persistence.repository.DataUserRepository;
 import net.mrsistemas.healthy.business.persistence.repository.UsersRepository;
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,6 +36,8 @@ public class DataUsersService {
     }
 
     public Optional<Users> findOne(final long id) {
+        Optional<Users> user = dao.findById(id);
+
         return dao.findById(id);
     }
 

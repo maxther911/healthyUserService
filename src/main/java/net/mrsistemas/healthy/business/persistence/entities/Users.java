@@ -104,10 +104,6 @@ public class Users extends BaseIdEntity {
         this.username = username;
     }
 
-    public DataUser getDataUser() { return dataUser; }
-
-    public void setDataUser(DataUser dataUser) { this.dataUser = dataUser; }
-
     @ManyToMany
     @JoinTable(name = "role_user", joinColumns = {
                 @JoinColumn(name = "user_id", referencedColumnName = "id")},
@@ -127,5 +123,13 @@ public class Users extends BaseIdEntity {
             });
         });
         return authorities;
+    }
+
+    public DataUser getDataUser() {
+        return dataUser;
+    }
+
+    public void setDataUser(DataUser dataUser) {
+        this.dataUser = dataUser;
     }
 }

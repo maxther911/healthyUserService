@@ -3,6 +3,8 @@ package net.mrsistemas.healthy.facade.controllers;
 
 import io.swagger.annotations.*;
 import net.mrsistemas.healthy.facade.dto.Greeting;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
@@ -21,10 +23,10 @@ public class GreetingController {
                   , tags = "Greetings")
     @ApiResponses({
             @ApiResponse(code = HttpServletResponse.SC_OK, message = "OK"),
-            @ApiResponse(code = HttpServletResponse.SC_NOT_FOUND, message = "ELEMENTO NOT FOUND")})
+            @ApiResponse(code = HttpServletResponse.SC_NOT_FOUND, message = "ELEMENT NOT FOUND")})
     @GetMapping(value = "/greeting")
-    public Greeting greeting(@RequestParam(value = "name", defaultValue = "World") String name) {
-        return new Greeting(counter.incrementAndGet(), String.format(template, name));
+    public ResponseEntity<Greeting> greeting(@RequestParam(value = "name", defaultValue = "World") String name) {
+        return new ResponseEntity<>(new Greeting(counter.incrementAndGet(), String.format(template, name)), HttpStatus.OK);
     }
 
 }

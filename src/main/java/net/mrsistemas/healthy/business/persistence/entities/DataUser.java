@@ -9,8 +9,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.List;
-
 
 /**
  * The persistent class for the data_users database table.
@@ -23,7 +21,6 @@ public class DataUser {
 	@Id
 	private Long id;
 	private String address;
-
 	@DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	@Column(name="birth_date")
@@ -41,11 +38,6 @@ public class DataUser {
 	@JsonIgnore
 	private BigDecimal state;
 
-	//bi-directional many-to-one association to City
-	@OneToMany(fetch=FetchType.EAGER)
-	@JsonIgnore
-	private List<City> places_visited;
-
 	@Getter
 	@Setter
 	@OneToOne
@@ -53,7 +45,6 @@ public class DataUser {
 	@JoinColumn(name = "id_contact", insertable = false, updatable = false)
 	private DataUser contact;
 
-	//bi-directional many-to-one association to City
 	@ManyToOne
 	@JoinColumn(name="id_city_birth")
 	@JsonIgnore
@@ -148,14 +139,6 @@ public class DataUser {
 
 	public void setState(BigDecimal state) {
 		this.state = state;
-	}
-
-	public List<City> getPlaces_visited() {
-		return this.places_visited;
-	}
-
-	public void setPlaces_visited(List<City> places_visited) {
-		this.places_visited = places_visited;
 	}
 
 	public City getBirth_city() {
