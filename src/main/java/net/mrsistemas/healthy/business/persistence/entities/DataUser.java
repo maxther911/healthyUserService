@@ -1,6 +1,7 @@
 package net.mrsistemas.healthy.business.persistence.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -31,26 +32,31 @@ public class DataUser {
 	private String dni;
 	private String email;
 	@Column(name="id_contact")
+	@JsonIgnore
 	private Long idContact;
 	@Column(name="last_name")
 	private String lastName;
 	private String name;
 	private String phone;
+	@JsonIgnore
 	private BigDecimal state;
 
 	//bi-directional many-to-one association to City
 	@OneToMany(fetch=FetchType.EAGER)
+	@JsonIgnore
 	private List<City> places_visited;
 
 	@Getter
 	@Setter
 	@OneToOne
+	@JsonIgnore
 	@JoinColumn(name = "id_contact", insertable = false, updatable = false)
 	private DataUser contact;
 
 	//bi-directional many-to-one association to City
 	@ManyToOne
 	@JoinColumn(name="id_city_birth")
+	@JsonIgnore
 	private City birth_city;;
 
 	public DataUser() {

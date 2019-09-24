@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
 
 @RestController
-@Api(value = "NonUsers",  tags = "No users API ")
+@Api(value = "NonUsers",  tags = "Users Creation operations ")
 @RequestMapping("/NonUser")
 public class NonUserController {
 

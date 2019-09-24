@@ -1,5 +1,6 @@
 package net.mrsistemas.healthy.facade.controllers;
 
+import io.swagger.annotations.Api;
 import net.mrsistemas.healthy.business.persistence.entities.Users;
 import net.mrsistemas.healthy.business.persistence.service.DataUsersService;
 import net.mrsistemas.healthy.facade.dto.Greeting;
@@ -19,6 +20,7 @@ import java.util.concurrent.atomic.AtomicLong;
 
 @RestController
 @RequestMapping("/users")
+@Api(value = "Api for data operations users.", tags = "User Operations Authenticated")
 public class UsersController {
 
     private static final String template = "Hello, %s!";

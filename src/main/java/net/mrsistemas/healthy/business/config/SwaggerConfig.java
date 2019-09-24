@@ -29,12 +29,12 @@ public class SwaggerConfig {
     private ApiInfo apiInfo() {
         return new ApiInfo(
                 "Healthy Users Operation API",
-                "Api para el control y registro de datos médicos, fisicos y personales de los usuarios.",
+                "Api para el control y registro de datos fisicos y personales de los usuarios.",
                 "0.0.1",
                 "Terms of service",
-                new Contact("Max Fredis Tovar Hernández", "www.myrsistemas.net", "maxther911@gmail.com"),
+                new Contact("Max Fredis Tovar Hernández", "www.mrsistemas.net", "maxther911@gmail.com"),
                 "License",
-                "/license",
+                "https://github.com/maxther911/healthyUserService/blob/master/LICENSE",
                 Collections.emptyList());
     }
 }

@@ -1,5 +1,6 @@
 package net.mrsistemas.healthy.business.persistence.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.codehaus.jackson.annotate.JsonProperty;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
@@ -18,14 +19,20 @@ public class Users extends BaseIdEntity {
     @Id
     private Long id;
     @Column(name="account_expired")
+    @JsonIgnore
     private Boolean accountExpired;
     @Column(name="account_locked")
+    @JsonIgnore
     private Boolean accountLocked;
     @Column(name="credentials_expired")
+    @JsonIgnore
     private Boolean credentialsExpired;
     private String email;
+    @JsonIgnore
     private Boolean enabled;
+    @JsonIgnore
     private String password;
+    @JsonIgnore
     private String username;
 
     //bi-directional one-to-one association to DataUser
@@ -110,6 +117,7 @@ public class Users extends BaseIdEntity {
     @JsonProperty(value = "rol")
     private List<Role> roles;
 
+    @JsonIgnore
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Set<GrantedAuthority> authorities = new HashSet<GrantedAuthority>();
         roles.forEach(r -> {
