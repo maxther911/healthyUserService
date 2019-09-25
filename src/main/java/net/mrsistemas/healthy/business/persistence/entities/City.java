@@ -1,5 +1,6 @@
 package net.mrsistemas.healthy.business.persistence.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -31,6 +32,7 @@ public class City implements Serializable {
 	@Getter
 	@Setter
 	@Column(updatable = false, insertable = false)
+	@JsonIgnore
 	private Long id_location;
 
 	//bi-directional many-to-one association to Country
