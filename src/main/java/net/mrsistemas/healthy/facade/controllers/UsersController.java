@@ -60,6 +60,19 @@ public class UsersController {
         return details;
     }
 
+
+    @PreAuthorize("#oauth2.hasScope('read')")
+    @GetMapping(value = "/getUserByToken")
+    @ResponseBody
+    public ResponseEntity<Users> getUserByToken(Authentication auth) {
+        OAuth2AuthenticationDetails oauthDetails = (OAuth2AuthenticationDetails) auth.getDetails();
+        Map<String, Object> details = (Map<String, Object>) oauthDetails.getDecodedDetails();
+        System.out.println("Details: " + details.get("id").toString());
+        Long id = Long.parseLong(details.get("id").toString());
+        return new ResponseEntity<Users>(uService.findOne(id).get(), HttpStatus.OK);
+
+    }
+
     @PreAuthorize("#oauth2.hasScope('read')")
     @GetMapping(value = "/id/{id}")
     @ResponseBody
