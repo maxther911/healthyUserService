@@ -49,7 +49,11 @@ public class DataUser {
 
 	@ManyToOne
 	@JoinColumn(name="id_city_birth")
-	private City birth_city;;
+	private City birth_city;
+
+	@Getter
+	@Setter
+	private String photo;
 
 	public DataUser() {
 	}
