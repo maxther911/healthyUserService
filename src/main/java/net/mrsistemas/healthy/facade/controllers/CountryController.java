@@ -4,10 +4,8 @@ import io.swagger.annotations.Api;
 import net.mrsistemas.healthy.business.persistence.entities.Country;
 import net.mrsistemas.healthy.business.persistence.repository.CountryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import javax.websocket.server.PathParam;
 import java.util.Set;
 
 @RestController
@@ -23,4 +21,12 @@ public class CountryController {
     public Set<Country> getCountryByNameLike(@PathVariable String name){
         return countryRepository.getCountriesByNameStartingWith(name.toUpperCase());
     }
+
+    @GetMapping(value = "/getAll")
+    @ResponseBody
+    public Iterable<Country> getCountries(){
+        return countryRepository.findAll();
+    }
+
+
 }
