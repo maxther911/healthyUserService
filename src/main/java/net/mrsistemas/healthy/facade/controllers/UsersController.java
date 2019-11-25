@@ -2,7 +2,7 @@ package net.mrsistemas.healthy.facade.controllers;
 
 import io.swagger.annotations.Api;
 import net.mrsistemas.healthy.business.persistence.entities.Users;
-import net.mrsistemas.healthy.business.persistence.service.DataUsersService;
+import net.mrsistemas.healthy.business.persistence.service.UsersService;
 import net.mrsistemas.healthy.facade.dto.Greeting;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,7 +27,7 @@ public class UsersController {
     private final AtomicLong counter = new AtomicLong();
 
     @Autowired
-    DataUsersService uService;
+    UsersService uService;
 
     @PreAuthorize("#oauth2.hasScope('read')")
     @RequestMapping(value = "/greeting", method = RequestMethod.GET)
@@ -35,7 +35,7 @@ public class UsersController {
         return new Greeting(counter.incrementAndGet(), String.format(template, name));
     }
 
-    @PreAuthorize("#oauth2.hasScope('foo') and #oauth2.hasScope('read')")
+    @PreAuthorize("#oauth2.hasScope('role_admin')")
     @GetMapping(value = "/getUsers")
     public List<Users> getUsers() {
         List<Users> lista = new ArrayList<>();
@@ -51,7 +51,7 @@ public class UsersController {
          return users.getAllDataUsers();
      }
  */
-    @PreAuthorize("#oauth2.hasScope('read')")
+    @PreAuthorize("#oauth2.hasScope('role_user')")
     @GetMapping(value = "/extra")
     @ResponseBody
     public Map<String, Object> getExtraInfo(Authentication auth) {
@@ -61,7 +61,7 @@ public class UsersController {
     }
 
 
-    @PreAuthorize("#oauth2.hasScope('read')")
+    @PreAuthorize("#oauth2.hasScope('role_user') or #oauth2.hasScope('role_admin')")
     @GetMapping(value = "/getUserByToken")
     @ResponseBody
     public ResponseEntity<Users> getUserByToken(Authentication auth) {
@@ -73,7 +73,7 @@ public class UsersController {
 
     }
 
-    @PreAuthorize("#oauth2.hasScope('read')")
+    @PreAuthorize("#oauth2.hasScope('role_user')")
     @GetMapping(value = "/id/{id}")
     @ResponseBody
     public ResponseEntity<Users> getInfoUser(@PathVariable(value = "id") long id) {

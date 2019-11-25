@@ -1,8 +1,15 @@
 package net.mrsistemas.healthy.business.persistence.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.io.Serializable;
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 
 /**
@@ -10,41 +17,24 @@ import java.util.List;
  * 
  */
 @Entity
+@NoArgsConstructor
 public class Country implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@Getter @Setter
 	private Long id;
 
+	@Getter @Setter
 	private String code;
 
+	@Getter @Setter
 	private String name;
 
-	public Country() {
-	}
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "country")
+	@Getter @Setter
+	@JsonIgnoreProperties("country")
+	private Set<City> cities = new HashSet<>();
 
-	public Long getId() {
-		return this.id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getCode() {
-		return this.code;
-	}
-
-	public void setCode(String code) {
-		this.code = code;
-	}
-
-	public String getName() {
-		return this.name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
 }
 

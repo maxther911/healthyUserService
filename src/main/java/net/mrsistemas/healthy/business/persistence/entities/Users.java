@@ -1,13 +1,19 @@
 package net.mrsistemas.healthy.business.persistence.entities;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Getter;
+import lombok.Setter;
 import org.codehaus.jackson.annotate.JsonProperty;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -17,98 +23,78 @@ import java.util.Set;
 public class Users extends BaseIdEntity {
 
     @Id
+    @Column(name = "id", unique = true, nullable = false)
+    @Getter @Setter
     private Long id;
-    @Column(name="account_expired")
+    @Column(name = "account_expired")
     @JsonIgnore
-    private Boolean accountExpired;
-    @Column(name="account_locked")
+    @Getter @Setter
+    private Boolean accountExpired = false;
+    @Column(name = "account_locked")
     @JsonIgnore
-    private Boolean accountLocked;
-    @Column(name="credentials_expired")
+    @Getter @Setter
+    private Boolean accountLocked = false;
+    @Column(name = "credentials_expired")
     @JsonIgnore
-    private Boolean credentialsExpired;
+    @Getter @Setter
+    private Boolean credentialsExpired = false;
+    @Getter @Setter
     private String email;
     @JsonIgnore
-    private Boolean enabled;
-    @JsonIgnore
+    @Getter @Setter
+    private Boolean enabled = true;
+    @Getter @Setter
     private String password;
-    @JsonIgnore
+    @Getter @Setter
     private String username;
 
-    //bi-directional one-to-one association to DataUser
-    @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="id", updatable = false, insertable = false)
-    private DataUser data;
+    @Getter @Setter
+    private String address;
+    @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    @Column(name="birth_date")
+    @Getter @Setter
+    private LocalDate birthDate;
+    @Getter @Setter
+    private String cellphone;
+    @Getter @Setter
+    private String dni;
+    @Column(name="id_contact")
+    @JsonIgnore
+    @Getter @Setter
+    private Long idContact;
+    @Column(name="last_name")
+    @Getter @Setter
+    private String lastName;
+    @Getter @Setter
+    private String name;
+    @Getter @Setter
+    private String phone;
+    @JsonIgnore
+    @Getter @Setter
+    private BigDecimal state;
 
-    public Long getId() {
-        return this.id;
-    }
+    @Getter
+    @Setter
+    @OneToOne
+    @JsonProperty("contact")
+    @JoinColumn(name = "id_contact", insertable = false, updatable = false)
+    private Users contact;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    @ManyToOne
+    @JoinColumn(name="id_city_birth")
+    @Getter @Setter
+    private City birth_city;
 
-    public Boolean getAccountExpired() {
-        return this.accountExpired;
-    }
-
-    public void setAccountExpired(Boolean accountExpired) {
-        this.accountExpired = accountExpired;
-    }
-
-    public Boolean getAccountLocked() {
-        return this.accountLocked;
-    }
-
-    public void setAccountLocked(Boolean accountLocked) {
-        this.accountLocked = accountLocked;
-    }
-
-    public Boolean getCredentialsExpired() {
-        return this.credentialsExpired;
-    }
-
-    public void setCredentialsExpired(Boolean credentialsExpired) {
-        this.credentialsExpired = credentialsExpired;
-    }
-
-    public String getEmail() {
-        return this.email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public Boolean getEnabled() {
-        return this.enabled;
-    }
-
-    public void setEnabled(Boolean enabled) {
-        this.enabled = enabled;
-    }
-
-    public String getPassword() {
-        return this.password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getUsername() {
-        return this.username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
+    @Getter
+    @Setter
+    private String photo;
 
     @ManyToMany
     @JoinTable(name = "role_user", joinColumns = {
-                @JoinColumn(name = "user_id", referencedColumnName = "id")},
+            @JoinColumn(name = "user_id", referencedColumnName = "id")},
             inverseJoinColumns = {
-                @JoinColumn(name = "role_id", referencedColumnName = "id")})
+                    @JoinColumn(name = "role_id", referencedColumnName = "id")})
     @Fetch(value = FetchMode.SUBSELECT)
     @JsonProperty(value = "rol")
     private List<Role> roles;
@@ -125,11 +111,4 @@ public class Users extends BaseIdEntity {
         return authorities;
     }
 
-    public DataUser getData() {
-        return data;
-    }
-
-    public void setData(DataUser data) {
-        this.data = data;
-    }
 }
