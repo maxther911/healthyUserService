@@ -51,7 +51,7 @@ public class UsersController {
          return users.getAllDataUsers();
      }
  */
-    @PreAuthorize("#oauth2.hasScope('role_user')")
+    @PreAuthorize("#oauth2.hasScope('role_user') or #oauth2.hasScope('role_admin')")
     @GetMapping(value = "/extra")
     @ResponseBody
     public Map<String, Object> getExtraInfo(Authentication auth) {
@@ -78,6 +78,13 @@ public class UsersController {
     @ResponseBody
     public ResponseEntity<Users> getInfoUser(@PathVariable(value = "id") long id) {
         return new ResponseEntity<Users>(uService.findOne(id).get(), HttpStatus.OK);
+    }
+
+    @PreAuthorize("#oauth2.hasScope('role_admin')")
+    @GetMapping(value = "/getAll")
+    @ResponseBody
+    public ResponseEntity<List<Users>> getInfoUsers() {
+        return new ResponseEntity<List<Users>>(uService.findAllUsers(), HttpStatus.OK);
     }
 
 }

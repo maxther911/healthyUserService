@@ -44,6 +44,7 @@ public class Users extends BaseIdEntity {
     @Getter @Setter
     private Boolean enabled = true;
     @Getter @Setter
+    @JsonIgnore
     private String password;
     @Getter @Setter
     private String username;
