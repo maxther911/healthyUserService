@@ -64,7 +64,7 @@ pipeline
 		stage('Deploy'){
 			steps {
 				sh 'echo "Deploying to Tomcat at http://tomcat:8080/healthyUserService-0.0.1-SNAPSHOT"'
-				sh 'curl -s --upload-file /home/jenkins/workspace/HealthyUserService/target/healthyUserService_1.0.0.war "http://udeploy:Deploy2019*@ip-172-31-38-16.us-east-2.compute.internal:8080/manager/text/deploy?path=/healthyUserService&update=true"'
+				sh 'curl -s --upload-file /var/jenkins_home/workspace/HealthyUserService/target/healthyUserService_1.0.0.war "http://udeploy:Deploy2019*@ip-172-31-22-117.us-east-2.compute.internal:8080/manager/text/deploy?path=/healthyUserService&update=true"'
             }
 		}
     }
